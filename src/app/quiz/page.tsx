@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ProgressBar from "@/components/ProgressBar";
 import { ChevronLeftIcon, ChevronLeftSquareIcon, ChevronRightIcon, ChevronRightSquareIcon, X } from "lucide-react";
+import ResultCard from "./resultCard";
 
 const questions = [
   {
@@ -41,6 +42,9 @@ export default function Home() {
     if(currentQuestion < questions.length -1) {
       setCurrentQuestion(currentQuestion +1);
     }
+
+    setSelectedAnswer(null);
+    setIsCorrect(null);
   }
 
   const handleAnswer = (answer) => {
@@ -71,7 +75,7 @@ export default function Home() {
           {
             questions[currentQuestion].answers.map(answer => {
                 return (
-                <Button key={answer.id} variant={"secondary"}>
+                <Button key={answer.id} variant={"secondary"} onClick={() => handleAnswer(answer)}>
                   {answer.answerText}
                 </Button>
                 )
@@ -81,6 +85,7 @@ export default function Home() {
         </div>}
     </main>
     <footer className="footer pb-9 px-6 relative mb-0">
+      <ResultCard isCorrect={isCorrect} correctAnswer={questions[currentQuestion].answers.find(answer => answer.isCorrect === true)?.answerText}/>
       <Button onClick={handleNext}>{!started ? 'Start' : 'Next'}</Button>
     </footer>
     </div>
