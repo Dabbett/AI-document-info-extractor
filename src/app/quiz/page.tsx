@@ -102,7 +102,7 @@ export default function Home() {
             questions[currentQuestion].answers.map(answer => {
               const variant = selectedAnswer === answer.id ? (answer.isCorrect ? "neoSuccess" : "neoDanger") : "neoOutline";
                 return (
-                <Button key={answer.id} variant={variant} size="xl" onClick={() => handleAnswer(answer)}>
+                <Button key={answer.id} variant={"neoOutline"} size="xl" onClick={() => handleAnswer(answer)}>
                   {answer.answerText}
                 </Button>
                 )

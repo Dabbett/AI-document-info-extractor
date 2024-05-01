@@ -20,7 +20,7 @@ const UploadDoc = () => {
     const formData = new FormData();
     formData.append("pdf", document as Blob);
     try {
-      const res = await fetch("/api/quizz/generate", {
+      const res = await fetch("/api/quiz/generate", {
         method: "POST",
         body: formData
       });
