@@ -5,13 +5,13 @@ import { cn } from "@/lib/utils"
 
 type Props = {
     isCorrect: boolean | null | undefined,
-    correctAnswer: string | undefined
+    correctAnswer: string 
 }
 
 const ResultCard = (props: Props) => {
     const { isCorrect } = props;
 
-    if (isCorrect === null) {
+    if (isCorrect === null || isCorrect === undefined) {
         return null
     }
 
@@ -19,7 +19,7 @@ const ResultCard = (props: Props) => {
     
     const borderClasses = clsx({
         "border-green-500": isCorrect,
-        "border border-red-500": !isCorrect
+        "border-red-500": !isCorrect
     })
 
   return (
@@ -28,7 +28,6 @@ const ResultCard = (props: Props) => {
         "border-2",
         "rounded-lg",
         "p-4",
-        "text-center",
         "text-center",
         "text-lg",
         "font-semibold",
