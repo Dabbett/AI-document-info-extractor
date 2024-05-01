@@ -4,14 +4,14 @@ import { cn } from "@/lib/utils"
 
 
 type Props = {
-    isCorrect: boolean | null,
-    correctAnswer: string
+    isCorrect: boolean | null | undefined,
+    correctAnswer: string | undefined
 }
 
 const ResultCard = (props: Props) => {
     const { isCorrect } = props;
 
-    if(isCorrect === null) {
+    if (isCorrect === null) {
         return null
     }
 

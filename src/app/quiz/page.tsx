@@ -52,11 +52,11 @@ export default function Home() {
     setIsCorrect(null);
   }
 
-  const handleAnswer = (answer) => {
+  const handleAnswer = (answer: any) => {
     setSelectedAnswer(answer.id);
     const isCurrentCorrect = answer.isCorrect;
     if (isCurrentCorrect) {
-      setScore(score +1);
+      setScore(score + 1);
     }
     setIsCorrect(isCurrentCorrect)
   }
