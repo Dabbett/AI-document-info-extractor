@@ -11,7 +11,20 @@ const [isLoading, setIsLoading] = useState<boolean>(false);
 const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log(document);
+    const formData = new FormData();
+    formData.append("pdf", document as Blob);
+    try{
+        const res = await fetch("api/quiz/generate", {
+            method: "POST",
+            body: formData
+        });
+        if(res.status == 200) {
+            console.log("quiz generated successfully")
+        } 
+    } catch (e) {
+        console.log("error while generating", e);
+    }
+    setIsLoading(false);
 }
 
   return (

@@ -1,4 +1,4 @@
-The project that uses AI to generate quizzes based on documents you upload. 
+The project that uses AI to generate quizzes based on documents you upload.
 
 <img width="1399" alt="" src="">
 
