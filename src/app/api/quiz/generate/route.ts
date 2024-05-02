@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
                 { error: "OpenAi key not provided." },
                 { status: 500 })
         }
+        
         const model = new ChatOpenAI({
             openAIApiKey: process.env.OPENAI_API_KEY,
             modelName: "gpt-4-1106-preview"
@@ -71,6 +72,7 @@ export async function POST(req: NextRequest) {
             functions: [extractionFunctinsSchema],
             function_call: {name: "extractor"},
         })
+
         const message = new HumanMessage({
             content: [
                 {
