@@ -17,7 +17,7 @@ type Props = {
 }
 
 export default function QuizQuestions(props: Props) {
-    const { questions } = props.quiz;
+  const { questions } = props.quiz;
   const [started, setStarted] = useState<boolean>(false);
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
