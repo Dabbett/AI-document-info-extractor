@@ -8,7 +8,7 @@ type Question = InferInsertModel<typeof dbQuestions>;
 type Answer = InferInsertModel<typeof questionAnswers>;
 
 interface SaveQuizData extends Quiz {
-    questions: Array<Question & {answers?: Answer[]}
+    questions: Array<Question & {answers?: Answer[]}>;
 }
 
 export default async function saveQuiz(quizData: SaveQuizData) {
