@@ -102,8 +102,8 @@ export default function Home() {
             questions[currentQuestion].answers.map(answer => {
               const variant = selectedAnswer === answer.id ? (answer.isCorrect ? "neoSuccess" : "neoDanger") : "neoOutline";
                 return (
-                <Button key={answer.id} variant={"neoOutline"} size="xl" onClick={() => handleAnswer(answer)}>
-                  {answer.answerText}
+                <Button key={answer.id} variant={variant} size="xl" onClick={() => handleAnswer(answer)}>
+                  <p className="whitespace-normal">{answer.answerText}</p>
                 </Button>
                 )
             })
@@ -112,7 +112,7 @@ export default function Home() {
         </div>)}
     </main>
     <footer className="footer pb-9 px-6 relative mb-0">
-      <ResultCard isCorrect={isCorrect} correctAnswer={questions[currentQuestion].answers.find(answer => answer.isCorrect === true)?.answerText}/>
+      <ResultCard isCorrect={isCorrect} correctAnswer={questions[currentQuestion].answers.find(answer => answer.isCorrect === true)?.answerText || ""}/>
       <Button variant="neo" size="lg" onClick={handleNext}>{!started ? 'Start' : 'Next'}</Button>
     </footer>
     </div>

@@ -2,10 +2,10 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps, cx } from "class-variance-authority"
 
-import { cn } from "@/lib/utils";
-import clsx from "clsx";
+import { cn } from "@/lib/utils"
+import { clsx } from "clsx";
 
-const neoClasses = "w-full rounded-lg px-3.5 py-5 border-2 relative z-10 text-lg font-bold hover:transform hover:translate-y-[-2px] transition-transform-duration-200";
+const neoClasses = "w-full rounded-full px-3.5 py-5 border-2 relative z-10 text-lg font-bold hover:transform hover:translate-y-[-2px] transition-tranform-duration-200";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
@@ -21,13 +21,15 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        neo: cn(neoClasses, "bg-[#3e406a] text-white border-[#63366a7]"),
+        neo: cn(neoClasses, "bg-primary text-primary-foreground border-blue-900"),
         neoOutline: cn(neoClasses, "bg-[#3e406a] text-white border-[#6366a7]"),
+        neoSuccess: cn(neoClasses, "bg-green-500 text-primary-foreground border-green-600"),
+        neoDanger: cn(neoClasses, "bg-red-500 text-primary-foreground border-red-600"),
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
-        lg: "h-14 rounded-full px-3.5 py-5 mt-4",
+        lg: "h-14 rounded-full px-3.5 py-5",
         xl: "rounded-2xl h-16 px-6 py-3",
         icon: "h-10 w-10",
       },
@@ -46,32 +48,27 @@ export interface ButtonProps
 }
 
 export const spanVariants = cva(
-  ["absolute", "h-14", "bottom-[-7px]", "w-full", "border-2", "left-0", "z-0"], {
-    variants: {
-      variant: {
-        default: "hidden",
-        destructive:
+  ["absolute", "h-14", "bottom-[-4px]", "w-full", "border-2", "left-0", "z-0"], {
+  variants: {
+    variant: {
+      default: "hidden",
+      destructive:
         "hidden",
-        outline:
+      outline: "hidden",
+      secondary:
         "hidden",
-        secondary:
-        "hidden",
-        ghost: "hidden",
-        link: "hidden",
-        neo: "border-blue-900 bg-primary-shadow",
-        neoOutline: "hidden",
-      },
-      size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-14 rounded-full px-3.5 py-5 mt-4",
-        icon: "h-10 w-10",
-      },
+      ghost: "hidden",
+      link: "hidden",
+      neo: "border-blue-900 bg-primary-shadow",
+      neoOutline: "bg-[#6366a7] border-[#6366F6]",
+      neoSuccess: "border-green-500 bg-green-600",
+      neoDanger: "border-red-500 bg-red-600",
     },
-    defaultVariants: {
-      variant: "default"
-    }
+  },
+  defaultVariants: {
+    variant: "default"
   }
+}
 )
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -79,13 +76,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : "button"
 
     const containerClasses = clsx({
-      relative: variant === "neo"
+      relative: variant === "neo" || variant === "neoOutline" || variant === "neoSuccess" || variant === "neoDanger"
+    });
+
+    const borderRound = clsx({
+      "rounded-full": variant === "neo",
+      "rounded-2xl": variant === "neoOutline" || variant === "neoDanger" || variant === "neoSuccess"
     })
 
-    const borderRound= clsx({
-      "rounded-full": variant ==="neo",
-      "rounded-2xl": variant === "neoOutline" 
-    })
     return (
       <div className={containerClasses}>
       <Comp
@@ -93,7 +91,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       />
-      <span className={cx(spanVariants({variant}), borderRound)}></span>
+        <span className={cx(spanVariants({ variant }), borderRound)}></span>
       </div>
     )
   }

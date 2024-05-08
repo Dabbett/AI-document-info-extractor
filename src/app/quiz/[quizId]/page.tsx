@@ -27,7 +27,7 @@ const page = async ({ params }: {
     };
 
     return (
-       <div><QuizQuestions quiz={quiz} /></div>
+       <QuizQuestions quiz={quiz} />
     )
 }
 

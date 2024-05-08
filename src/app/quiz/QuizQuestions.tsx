@@ -21,8 +21,8 @@ export default function QuizQuestions(props: Props) {
   const [started, setStarted] = useState<boolean>(false);
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [isCorrect, setIsCorrect] = useState<boolean| null>(null);
+  const [userAnswers, setUserAnswers] = useState<{questionId: number, answerId: number}[]>([]);
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [submitted, setSubmitted] = useState<boolean>(false);
   
 
@@ -38,12 +38,15 @@ export default function QuizQuestions(props: Props) {
       return;
     }
 
-    setSelectedAnswer(null);
     setIsCorrect(null);
   }
 
-  const handleAnswer = (answer: Answer) => {
-    setSelectedAnswer(answer.id);
+  const handleAnswer = (answer: Answer, questionId: number) => {
+    const newUserAnswersArr = [...userAnswers, {
+      questionId,
+      answerId: answer.id,
+  }];
+    setUserAnswers(newUserAnswersArr)
     const isCurrentCorrect = answer.isCorrect;
     if (isCurrentCorrect) {
       setScore(score + 1);
@@ -51,7 +54,22 @@ export default function QuizQuestions(props: Props) {
     setIsCorrect(isCurrentCorrect)
   }
 
+  const handleSubmit = async () => {
+    try {
+      const subId = await saveSubmission({score}, props.quiz.id);
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const handlePressPrev = () => {
+  if(currentQuestion !==0) {
+    setCurrentQuestion(prevCurrentQuestion => prevCurrentQuestion -1)
+  }
+}
+
   const scorePercentage: number = Math.round((score/ questions.length)*100);
+  const selectedAnswer: number | null | undefined = userAnswers.find((item) => item.questionId === questions[currentQuestion].id)?.answerId;
 
   if(submitted) {
     return (
@@ -67,7 +85,7 @@ export default function QuizQuestions(props: Props) {
     <div className="flex flex-col flex-1">
       <div  className="position-sticky top-0 z-10 shadow-md py-4 w-full"> 
         <header className="grid grid-cols-[auto,1fr,auto] grid-flow-col items-center justify-between py-2 gap-2">
-          <Button size="icon" variant="outline"><ChevronLeftIcon/></Button>
+          <Button size="icon" variant="outline" onClick={handlePressPrev}><ChevronLeftIcon/></Button>
           <ProgressBar value={(currentQuestion / questions.length)*100}/> 
           <Button size="icon" variant="outline">
             <X />
@@ -83,8 +101,8 @@ export default function QuizQuestions(props: Props) {
             questions[currentQuestion].answers.map(answer => {
               const variant = selectedAnswer === answer.id ? (answer.isCorrect ? "neoSuccess" : "neoDanger") : "neoOutline";
                 return (
-                <Button key={answer.id} variant={"neoOutline"} size="xl" onClick={() => handleAnswer(answer)}>
-                  {answer.answerText}
+                <Button key={answer.id} disabled={!!selectedAnswer} variant={variant} size="xl" onClick={() => handleAnswer(answer, questions[currentQuestion].id)} className="disabled:opacity-100">
+                 <p className="whitespace-normal">{answer.answerText}</p> 
                 </Button>
                 )
             })
@@ -93,8 +111,15 @@ export default function QuizQuestions(props: Props) {
         </div>)}
     </main>
     <footer className="footer pb-9 px-6 relative mb-0">
-      <ResultCard isCorrect={isCorrect} correctAnswer={questions[currentQuestion].answers.find(answer => answer.isCorrect === true)?.answerText || ""}/>
-      <Button variant="neo" size="lg" onClick={handleNext}>{!started ? 'Start' : 'Next'}</Button>
+      <ResultCard
+        isCorrect={isCorrect}
+        correctAnswer={questions[currentQuestion].answers.find(answer => answer.isCorrect === true)?.answerText || ""}/>
+      <Button
+        variant="neo"
+        size="lg" 
+        onClick={handleNext}
+        >
+          {!started ? 'Start' : 'Next'}</Button>
     </footer>
     </div>
   )
