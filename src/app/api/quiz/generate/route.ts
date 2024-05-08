@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
         });
         
         const parser = new JsonOutputFunctionsParser();
-        const extractionFunctinsSchema = {
+        const extractionFunctionSchema = {
             name: "extractor",
             description: "Extracts the fields from the output",
             parameters: {
@@ -71,9 +71,10 @@ export async function POST(req: NextRequest) {
 
         const runnable = model
         .bind({
-            functions: [extractionFunctinsSchema],
+            functions: [extractionFunctionSchema],
             function_call: {name: "extractor"},
         })
+        .pipe(parser);
 
         const message = new HumanMessage({
             content: [

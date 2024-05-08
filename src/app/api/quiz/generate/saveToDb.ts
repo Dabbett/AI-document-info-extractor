@@ -19,8 +19,8 @@ export default async function saveQuiz(quizData: SaveQuizData) {
         name,
         description
     })
-    .returning({ insertId: quizzes.id});
-    const quizId = newQuiz[0].insertId;
+    .returning({ insertedId: quizzes.id});
+    const quizId = newQuiz[0].insertedId;
 
     await db.transaction(async(tx) => {
         for (const question of questions) {

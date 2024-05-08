@@ -43,7 +43,9 @@ const QuizSubmission = (props: Props) => {
                     <p>{totalQuestions - score} Incorrect</p>
                     </div>
                     </>}
+                    
             </main>
+            
         </div>
     )
 }
