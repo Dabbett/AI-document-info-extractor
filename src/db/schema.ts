@@ -9,7 +9,7 @@ export const quizzes = pgTable("quizzes", {
     userID: text("user_id"),
 })
 
-export const quizzRelations = relations(quizzes, ({ many, one }) => ({
+export const quizzesRelations = relations(quizzes, ({ many, one }) => ({
     questions: many(questions),
 }))
 
@@ -34,7 +34,7 @@ export const questionAnswers = pgTable("answers", {
     isCorrect: boolean("is_correct"),
 })
 
-export const questionAnswersRElations = relations(questionAnswers, ({ one }) => ({
+export const questionAnswersRelations = relations(questionAnswers, ({ one }) => ({
     question: one(questions, {
         fields: [questionAnswers.questionId],
         references: [questions.id],

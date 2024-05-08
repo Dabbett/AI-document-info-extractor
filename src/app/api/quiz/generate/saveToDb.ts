@@ -2,7 +2,6 @@ import { db } from "@/db";
 import { quizzes, questions as dbQuestions, questionAnswers } from "@/db/schema";
 import { InferInsertModel } from "drizzle-orm";
 
-
 type Quiz = InferInsertModel<typeof quizzes>;
 type Question = InferInsertModel<typeof dbQuestions>;
 type Answer = InferInsertModel<typeof questionAnswers>;
@@ -44,6 +43,6 @@ export default async function saveQuiz(quizData: SaveQuizData) {
             }
         }
     })
-
+console.log(quizData)
     return { quizId }
 }
