@@ -20,7 +20,7 @@ const QuizSubmission = (props: Props) => {
         }
     }, [scorePercentage, reward])
     return (
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-col flex-1 ">
             <main className="py-11 flex flex-col gap-4 items-center flex-1 mt-24">
                 <h2 className="text-3xl font-bold"> Quiz Complete!</h2>
                 <p> You Scored: {scorePercentage}%</p>

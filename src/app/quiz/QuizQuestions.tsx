@@ -54,13 +54,13 @@ export default function QuizQuestions(props: Props) {
     }
   }
 
-  const handleSubmit = async () => {
-    try {
-      const subId = await saveSubmission({score}, props.quiz.id);
-    } catch (e) {
-      console.log(e)
-    }
-  }
+  // const handleSubmit = async () => {
+  //   try {
+  //     const subId = await saveSubmission({score}, props.quiz.id);
+  //   } catch (e) {
+  //     console.log(e)
+  //   }
+  // }
 
   const handlePressPrev = () => {
   if(currentQuestion !==0) {

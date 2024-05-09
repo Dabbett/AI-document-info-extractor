@@ -83,9 +83,9 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col flex-1">
-      <div  className="position-sticky top-0 z-10 shadow-md py-4 w-full"> 
-        <header className="grid grid-cols-[auto,1fr,auto] grid-flow-col items-center justify-between py-2 gap-2">
+    <div className="flex flex-col flex-1 m-2">
+      <div  className="position-sticky top-0 z-10 shadow-md py-2 w-full"> 
+        <header className="grid grid-cols-[auto,1fr,auto] grid-flow-col items-center justify-between py-2 gap-1">
           <Button size="icon" variant="outline"><ChevronLeftIcon/></Button>
           <ProgressBar value={(currentQuestion / questions.length)*100}/> 
           <Button size="icon" variant="outline">
