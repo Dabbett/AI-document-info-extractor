@@ -40,3 +40,10 @@ export const questionAnswersRelations = relations(questionAnswers, ({ one }) => 
         references: [questions.id],
     })
 }))
+
+export const quizSubmissions = pgTable("quiz_submissions", {
+    id: serial("id").primaryKey(),
+    quizzId: integer("quizz_id"),
+    score: integer("score"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  });
