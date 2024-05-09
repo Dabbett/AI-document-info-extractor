@@ -6,6 +6,8 @@ import { JsonOutputFunctionsParser } from "langchain/output_parsers";
 
 import saveQuiz from "./saveToDb";
 
+export const maxDuration = 30000;
+
 export async function POST(req: NextRequest) {
     const body = await req.formData();
     const document = body.get("pdf");
