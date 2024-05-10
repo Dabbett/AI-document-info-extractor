@@ -87,8 +87,8 @@ export default function QuizQuestions(props: Props) {
   }
 
   return (
-    <div className="flex flex-col flex-1">
-      <div  className="position-sticky top-0 z-10 shadow-md py-0"> 
+    <div className="flex flex-col flex-1 max-w-screen-lg min-h-90vh">
+      <div  className="position-sticky top-0 z-10 shadow-md py-0 px-2"> 
         <header className="grid grid-cols-[auto,1fr,auto] grid-flow-col items-center justify-between py-2 gap-2">
           <Button size="icon" variant="outline" onClick={handlePressPrev}><ChevronLeftIcon/></Button>
           <ProgressBar value={(currentQuestion / questions.length)*100}/> 
@@ -97,7 +97,7 @@ export default function QuizQuestions(props: Props) {
             </Button>
         </header>
       </div>
-    <main className="flex justify-center flex-1">
+    <main className="flex justify-center flex-1 px-4">
       {!started? <h1 className="text-4xl font-bold">Scan. Quiz. Learn.</h1>: (
       <div> 
         <h2 className="text-3xl font-bold">{questions[currentQuestion].questionText}</h2>
@@ -115,7 +115,7 @@ export default function QuizQuestions(props: Props) {
         </div>
         </div>)}
     </main>
-    <footer className="footer px-6 relative mb-20">
+    <footer className="footer flex flex-col px-2 relative mb-20">
       <ResultCard
         isCorrect={isCorrect}
         correctAnswer={questions[currentQuestion].answers.find(answer => answer.isCorrect === true)?.answerText || ""}/>
@@ -123,6 +123,7 @@ export default function QuizQuestions(props: Props) {
         variant="neo"
         size="lg" 
         onClick={handleNext}
+        
         >
           {!started ? 'Start' : 'Next'}</Button>
     </footer>
