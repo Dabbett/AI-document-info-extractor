@@ -22,7 +22,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         neo: cn(neoClasses, "bg-primary text-primary-foreground border-blue-900"),
-        neoOutline: cn(neoClasses, "bg-[#3e406a] text-white border-[#6366a7]"),
+        neoOutline: cn(neoClasses, "bg-[#003366] text-white border-[#FFFFFF]"),
         neoSuccess: cn(neoClasses, "bg-green-500 text-primary-foreground border-green-600"),
         neoDanger: cn(neoClasses, "bg-red-500 text-primary-foreground border-red-600"),
       },

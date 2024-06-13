@@ -31,7 +31,8 @@ const ResultCard = (props: Props) => {
       "text-lg",
       "font-semibold",
       "my-4",
-      "bg-secondary"
+      "bg-secondary",
+      "text-gray-600"
     )}>{text}</div>
   )
 }
