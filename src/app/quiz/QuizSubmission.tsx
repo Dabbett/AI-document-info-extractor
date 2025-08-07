@@ -99,7 +99,8 @@ const QuizSubmission = (props: Props) => {
                                     "At least you're consistent... consistently wrong, but consistent!",
                                     "You know what they say -- actually you proabaly don't know that either.",
                                     "Think of this as character building. Your character is definitely being built right now",
-                                    "I'm saying this with all the love you deserve -- you should really be ashamed of yourself"
+                                    "I'm saying this with all the love you deserve -- you should really be ashamed of yourself",
+                                    "Certainly you can do better than this. Everyone's doing better than this. And they're literally all talking about it.",
                                 ];
                                 return quotes[Math.floor(Math.random() * quotes.length)];
                             })()}
