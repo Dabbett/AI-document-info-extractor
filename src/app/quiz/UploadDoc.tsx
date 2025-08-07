@@ -110,7 +110,7 @@ const UploadDoc = ({ standalone = true }: UploadDocProps) => {
         </motion.div>
       ) : (
         <motion.form 
-          className={`${backgrounds.glass} p-12`}
+          className={`md:p-12`}
           onSubmit={handleSubmit}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -124,7 +124,7 @@ const UploadDoc = ({ standalone = true }: UploadDocProps) => {
             >
               <FileText className="w-10 h-10 text-white" />
             </motion.div>
-            <h1 className={`text-3xl font-bold ${colors.text.primary} mb-4`}>Upload Your Document</h1>
+            <h1 className={`text-xl md:text-3xl font-bold ${colors.text.primary} mb-4`}>Upload Your Document</h1>
             <p className={colors.text.secondary}>Drop your PDF here and let AI create a personalized quiz</p>
           </div>
 
@@ -184,7 +184,7 @@ const UploadDoc = ({ standalone = true }: UploadDocProps) => {
               <button
                 type="submit"
                 disabled={!document}
-                className={`w-full ${buttonVariants.primary.base} disabled:opacity-50 disabled:cursor-not-allowed`}
+                className={`w-full ${buttonVariants.primary.base} disabled:opacity-90 disabled:cursor-not-allowed`}
               >
                 <span className={buttonVariants.primary.content}>
                   <Sparkles className="w-5 h-5" />

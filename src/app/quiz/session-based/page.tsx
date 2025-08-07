@@ -129,7 +129,7 @@ export default function SessionBasedQuiz() {
       <div className="relative z-10 min-h-screen">
         {/* Header */}
         <motion.header 
-          className="backdrop-blur-xl bg-white/10 border-b border-white/20 p-4 sticky top-0 z-20"
+          className="backdrop-blur-xl bg-white/10 border-b border-white/20 p-2 md:p-4 sticky top-0 z-20"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -162,7 +162,7 @@ export default function SessionBasedQuiz() {
         {/* Main Content */}
         <main className="p-6">
           <motion.div 
-            className="w-full max-w-4xl mx-auto"
+            className="w-full max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -193,7 +193,7 @@ export default function SessionBasedQuiz() {
               </motion.div>
             ) : (
               <motion.div 
-                className={`${backgrounds.glass} p-12`}
+                className={`${backgrounds.glass} p-6 md:p-8`}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
@@ -206,7 +206,7 @@ export default function SessionBasedQuiz() {
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <h2 className={`text-3xl font-bold ${colors.text.primary} mb-8 leading-relaxed`}>
+                    <h2 className={`text-2xl font-bold ${colors.text.primary} mb-4 leading-relaxed`}>
                       {questions[currentQuestion].questionText}
                     </h2>
                     

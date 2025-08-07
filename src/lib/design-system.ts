@@ -29,8 +29,8 @@ export const colors = {
   
   // Background gradients
   background: {
-    from: 'from-indigo-900',
-    via: 'via-purple-900',
+    from: 'from-black',
+    via: 'via-black',
     to: 'to-pink-900',
   },
   
@@ -114,7 +114,7 @@ export const getButtonClasses = (variant: keyof typeof buttonVariants, disabled?
 export const backgrounds = {
   main: `min-h-screen bg-gradient-to-br ${colors.background.from} ${colors.background.via} ${colors.background.to} relative overflow-hidden`,
   glass: `backdrop-blur-xl ${colors.glass.bg} rounded-3xl ${colors.glass.border} shadow-2xl`,
-  glassHover: `backdrop-blur-xl py-10 ${colors.glass.bg} rounded-3xl ${colors.glass.border} shadow-2xl ${colors.glass.hover} transition-all duration-500 hover:scale-105 hover:shadow-3xl`,
+  glassHover: `backdrop-blur-xl md:py-10 py-5 md:px-10 px-5 ${colors.glass.bg} rounded-3xl ${colors.glass.border} shadow-2xl ${colors.glass.hover} transition-all duration-500 hover:scale-105 hover:shadow-3xl`,
 };
 
 // Animation delays for staggered animations

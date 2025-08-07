@@ -21,7 +21,7 @@ export default function Home() {
         <div className="absolute -bottom-8 left-40  h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
 
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-10">
+      <div className="relative z-10 min-h-screen flex items-center justify-center p-8">
         <motion.main 
           className="flex flex-col items-center"
           initial={{ opacity: 0, y: 20 }}
@@ -30,24 +30,32 @@ export default function Home() {
         >
           <div className="text-center">
             <motion.div 
-              className="flex flex-col gap-10 max-w-4xl"
+              className="flex flex-col md:gap-10 max-w-4xl"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
+              <motion.h1 
+                  className="text-2xl md:text-4xl underline decoration-4 uppercase font-serif decoration-violet-500 font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent mb-6 md:mb-2 pt-2 md:pt-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                >
+                  The Quizzard
+                </motion.h1>
               {/* Glassmorphism card */}
               <div className={backgrounds.glassHover}>
-                <motion.h1 
-                  className="text-4xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent mb-6"
+                <motion.h2 
+                  className="text-xl md:text-4xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent mb-6"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
                 >
                   Test your knowledge of ANYTHING!
-                </motion.h1>
+                </motion.h2>
                 
                 <motion.p 
-                  className={`text-xl ${colors.text.secondary} mb-8 leading-relaxed`}
+                  className={`text-lg ${colors.text.secondary} mb-8 leading-relaxed`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.6 }}
@@ -108,10 +116,25 @@ export default function Home() {
                   <h3 className={`${colors.text.primary} font-semibold mb-2`}>Track Progress</h3>
                   <p className={`${colors.text.secondary} text-sm`}>Monitor your learning progress with detailed analytics</p>
                 </div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                >
+                  <div className="flex justify-center md:hidden"><button 
+                    onClick={handleGetStarted}
+                    className={buttonVariants.primary.base}
+                  >
+                    <span className={buttonVariants.primary.content}>Get Started</span>
+                    <div className={buttonVariants.primary.overlay}></div>
+                    <div className={buttonVariants.primary.shine}></div>
+                  </button> </div>
+                </motion.div>
               </motion.div>
             </motion.div>
           </div>
         </motion.main>
+        
       </div>
     </div>
   );
