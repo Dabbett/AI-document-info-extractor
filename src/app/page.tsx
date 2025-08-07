@@ -20,6 +20,10 @@ export default function Home() {
         <div className="absolute top-40 right-20 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
         <div className="absolute -bottom-8 left-40  h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
+      {/* Advanced shine effect with multiple layers */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 via-white/300 to-transparent transform -skew-x-12 animate-shine-secondary z-20 opacity-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-800/30  to-transparent transform -skew-x-12 animate-shine-accent z-20 opacity-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-pink-200/20 to-transparent transform -skew-x-12 animate-shine-highlight z-20 opacity-0"></div>
 
       <div className="relative z-10 min-h-screen flex items-center justify-center p-8">
         <motion.main 
@@ -35,14 +39,20 @@ export default function Home() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <motion.h1 
-                  className="text-2xl md:text-4xl underline decoration-4 uppercase font-serif decoration-violet-500 font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent mb-6 md:mb-2 pt-2 md:pt-6"
-                  initial={{ opacity: 0, y: 20 }}
+                              <motion.div 
+                  className="sticky top-0 z-50 w-full mb-8"
+                  initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                  The Quizzard
-                </motion.h1>
+                  <div className="backdrop-blur-xl bg-gradient-to-r from-white/90 via-white/100 to-white/90 border rounded-2xl p-2 md:p-4 shadow-2xl max-w-2xl mx-auto">
+                    <h1 className="text-3xl md:text-5xl font-black tracking-tight text-center">
+                      <span className="bg-gradient-to-r from-pink-800 via-purple-800 to-gray-900 bg-clip-text text-transparent drop-shadow-lg">
+                        The Quizzard
+                      </span>
+                    </h1>
+                  </div>
+                </motion.div>
               {/* Glassmorphism card */}
               <div className={backgrounds.glassHover}>
                 <motion.h2 
@@ -82,7 +92,7 @@ export default function Home() {
 
               {/* Feature cards */}
               <motion.div 
-                className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8"
+                className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 md:mt-0"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1 }}
@@ -125,7 +135,7 @@ export default function Home() {
                     onClick={handleGetStarted}
                     className={buttonVariants.primary.base}
                   >
-                    <span className={buttonVariants.primary.content}>Get Started</span>
+                    <span className={buttonVariants.primary.content}>Try It Now</span>
                     <div className={buttonVariants.primary.overlay}></div>
                     <div className={buttonVariants.primary.shine}></div>
                   </button> </div>

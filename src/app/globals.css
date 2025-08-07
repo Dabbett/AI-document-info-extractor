@@ -62,3 +62,68 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  @keyframes shine {
+    0% {
+      transform: translateX(-100%) skewX(-12deg);
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(200%) skewX(-12deg);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes shine-accent {
+    0% {
+      transform: translateX(-100%) skewX(-8deg) scaleY(1.2);
+      opacity: 0;
+    }
+    25% {
+      opacity: 0.8;
+    }
+    75% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateX(200%) skewX(-8deg) scaleY(1.2);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes shine-highlight {
+    0% {
+      transform: translateX(-100%) skewX(-15deg) scaleY(2.8);
+      opacity: 0;
+    }
+    30% {
+      opacity: 0.6;
+    }
+    70% {
+      opacity: 0.6;
+    }
+    100% {
+      transform: translateX(200%) skewX(-15deg) scaleY(2.8);
+      opacity: 0;
+    }
+  }
+
+  .animate-shine-secondary {
+    animation: shine 4s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+  }
+  
+  .animate-shine-accent {
+    animation: shine-accent 4.5s cubic-bezier(0.4, 0, 0.2, 1) 1.3s forwards;
+  }
+  
+  .animate-shine-highlight {
+    animation: shine-highlight 8s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
+  }
+}
