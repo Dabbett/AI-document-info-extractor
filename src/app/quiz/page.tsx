@@ -5,6 +5,7 @@ import ProgressBar from "@/components/ProgressBar";
 import { ChevronLeftIcon, X } from "lucide-react";
 import ResultCard from "./ResultCard";
 import QuizSubmission from "./QuizSubmission";
+import { backgrounds, buttonVariants, colors } from "@/lib/design-system";
 
 const questions = [
   {
@@ -83,38 +84,97 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col flex-1 m-2">
-      <div  className="position-sticky top-0 z-10 shadow-md py-2 w-full"> 
-        <header className="grid grid-cols-[auto,1fr,auto] grid-flow-col items-center justify-between py-2 gap-1">
-          <Button size="icon" variant="outline"><ChevronLeftIcon/></Button>
-          <ProgressBar value={(currentQuestion / questions.length)*100}/> 
-          <Button size="icon" variant="outline">
-            <X />
-            </Button>
-        </header>
+    <div className={backgrounds.main}>
+      {/* Animated background */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+        <div className="absolute top-40 right-20 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-8 left-40 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
-    <main className="flex justify-center flex-1">
-      {!started? <h1 className="text-4xl font-bold">Scan. Quiz. Learn.</h1>: (
-      <div> 
-        <h2 className="text-3xl font-bold">{questions[currentQuestion].questionText}</h2>
-        <div className="grid grid-cols-1 gap-6 mt-6">
-          {
-            questions[currentQuestion].answers.map(answer => {
-              const variant = selectedAnswer === answer.id ? (answer.isCorrect ? "neoSuccess" : "neoDanger") : "neoOutline";
-                return (
-                <Button key={answer.id} variant={variant} size="xl" onClick={() => handleAnswer(answer)}>
-                  <p className="whitespace-normal">{answer.answerText}</p>
-                </Button>
-                )
-            })
-          }
-        </div>
-        </div>)}
-    </main>
-    <footer className="footer pb-9 px-6 relative flex flex-col mb-20 mt-auto">
-      <ResultCard isCorrect={isCorrect} correctAnswer={questions[currentQuestion].answers.find(answer => answer.isCorrect === true)?.answerText || ""}/>
-      <Button variant="neo" size="lg" onClick={handleNext}>{!started ? 'Start' : 'Next'}</Button>
-    </footer>
+
+      <div className="relative z-10 min-h-screen flex flex-col">
+        {/* Header */}
+        <header className="backdrop-blur-xl bg-white/10 border-b border-white/20 p-4 sticky top-0 z-20">
+          <div className="flex items-center justify-between max-w-4xl mx-auto">
+            <Button size="icon" variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-white/20">
+              <ChevronLeftIcon className="w-5 h-5" />
+            </Button>
+            <div className="flex-1 mx-4">
+              <ProgressBar value={(currentQuestion / questions.length)*100}/>
+            </div>
+            <Button size="icon" variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-white/20">
+              <X className="w-5 h-5" />
+            </Button>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="flex-1 flex items-center justify-center p-6">
+          <div className="w-full max-w-4xl">
+            {!started ? (
+              <div className="text-center">
+                <h1 className={`text-5xl font-bold ${colors.text.primary} mb-8`}>Scan. Quiz. Learn.</h1>
+                <button 
+                  onClick={handleNext}
+                  className={buttonVariants.primary.base}
+                >
+                  <span className={buttonVariants.primary.content}>Start Quiz</span>
+                  <div className={buttonVariants.primary.overlay}></div>
+                  <div className={buttonVariants.primary.shine}></div>
+                </button>
+              </div>
+            ) : (
+              <div className={`${backgrounds.glass} p-12`}>
+                <h2 className={`text-3xl font-bold ${colors.text.primary} mb-8`}>{questions[currentQuestion].questionText}</h2>
+                <div className="grid grid-cols-1 gap-4 mb-8">
+                  {questions[currentQuestion].answers.map(answer => {
+                    const isSelected = selectedAnswer === answer.id;
+                    const isCorrectAnswer = answer.isCorrect;
+                    
+                    return (
+                      <button
+                        key={answer.id}
+                        disabled={!!selectedAnswer}
+                        onClick={() => handleAnswer(answer)}
+                        className={`relative overflow-hidden rounded-2xl p-6 text-left transition-all duration-300 border-2 ${
+                          isSelected
+                            ? isCorrectAnswer
+                              ? `${colors.status.success.bg} ${colors.status.success.border} ${colors.status.success.text}`
+                              : `${colors.status.error.bg} ${colors.status.error.border} ${colors.status.error.text}`
+                            : `${colors.glass.bg} ${colors.glass.border} ${colors.glass.hover} ${colors.text.primary}`
+                        } disabled:cursor-not-allowed`}
+                      >
+                        <span className="text-lg font-medium">{answer.answerText}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+                
+                {selectedAnswer && (
+                  <ResultCard 
+                    isCorrect={isCorrect} 
+                    correctAnswer={questions[currentQuestion].answers.find(answer => answer.isCorrect === true)?.answerText || ""}
+                  />
+                )}
+                
+                <div className="flex justify-center mt-8">
+                  <button 
+                    onClick={handleNext}
+                    disabled={!selectedAnswer}
+                    className={`${buttonVariants.primary.base} disabled:opacity-50 disabled:cursor-not-allowed`}
+                  >
+                    <span className={buttonVariants.primary.content}>
+                      {currentQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next Question'}
+                    </span>
+                    <div className={buttonVariants.primary.overlay}></div>
+                    <div className={buttonVariants.primary.shine}></div>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </main>
+      </div>
     </div>
   )
 }

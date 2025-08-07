@@ -6,9 +6,8 @@ The project that uses AI to generate quizzes based on documents you upload.
 - Shadcn ui - ui library
 - Open Al - AI Integration
 - Langchain - LLM Framework
-- Drizzle - Orm
-- PostgreSQL - Database
-- Supabase - Database hosting
+- Mongoose - MongoDB ODM
+- MongoDB Atlas - Database
 - Stripe - Payments
 - Tanstack - Table
 - Typescript - Type Checking
@@ -44,7 +43,7 @@ OPENAI_API_KEY=""
 GOOGLE_CLIENT_ID=""
 GOOGLE_CLIENT_SECRET=""
 AUTH_SECRET=""
-DATABASE_URL=""
+MONGODB_URI=""
 NEXT_PUBLIC_PUBLISHABLE_KEY=""
 STRIPE_SECRET_KEY=""
 STRIPE_WEBHOOK_SECRET=""

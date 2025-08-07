@@ -1,12 +1,13 @@
 import UploadDoc from "../UploadDoc"
+import { colors } from "@/lib/design-system";
 
 const page = () => {
   return (
-    <div className="flex flex-col flex-1 m-2">
-        <main className="py-11 flex flex-col text-center gap-4 items-center flex-1 mt-24">
-            <h2 className="text-3xl font-bold mb-4">What do you want to be quizzed about today?</h2>
-            <UploadDoc />
-        </main>
+    <div className="min-h-screen flex items-center justify-center p-10">
+              <div className="text-center">
+          <h2 className={`text-3xl font-bold ${colors.text.primary} mb-8`}>What do you want to be quizzed about today?</h2>
+          <UploadDoc standalone={false} />
+        </div>
     </div>
   )
 }

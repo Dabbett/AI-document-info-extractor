@@ -5,17 +5,30 @@ import ProgressBar from "@/components/ProgressBar";
 import { ChevronLeftIcon, X } from "lucide-react";
 import ResultCard from "./ResultCard";
 import QuizSubmission from "./QuizSubmission";
-import { InferSelectModel } from "drizzle-orm";
-import { questionAnswers, questions as DbQuestions, quizzes } from "@/db/schema";
-// import { saveSubmission } from "@/actions/saveSubmissions";
 import { useRouter } from "next/navigation";
+import { saveSubmission } from "@/app/actions/saveSubmissions";
 
-type Answer = InferSelectModel<typeof questionAnswers>;
-type Question = InferSelectModel<typeof DbQuestions> & { answers: Answer[]};
-type Quiz = InferSelectModel<typeof quizzes> & { questions: Question[]};
+interface Answer {
+  _id: string;
+  answerText: string;
+  isCorrect: boolean;
+}
 
-type Props = {
- quiz: Quiz
+interface Question {
+  _id: string;
+  questionText: string;
+  answers: Answer[];
+}
+
+interface Quiz {
+  _id: string;
+  name: string;
+  description: string;
+  questions: Question[];
+}
+
+interface Props {
+  quiz: Quiz;
 }
 
 export default function QuizQuestions(props: Props) {
@@ -23,11 +36,9 @@ export default function QuizQuestions(props: Props) {
   const [started, setStarted] = useState<boolean>(false);
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
-  const [userAnswers, setUserAnswers] = useState<{questionId: number, answerId: number}[]>([]);
+  const [userAnswers, setUserAnswers] = useState<{questionId: string, answerId: string}[]>([]);
   const [submitted, setSubmitted] = useState<boolean>(false);
   const router = useRouter();
-
-
 
   const handleNext = () => {
     if(!started) {
@@ -42,10 +53,10 @@ export default function QuizQuestions(props: Props) {
     }
   }
 
-  const handleAnswer = (answer: Answer, questionId: number) => {
+  const handleAnswer = (answer: Answer, questionId: string) => {
     const newUserAnswersArr = [...userAnswers, {
       questionId,
-      answerId: answer.id,
+      answerId: answer._id,
   }];
     setUserAnswers(newUserAnswersArr)
     const isCurrentCorrect = answer.isCorrect;
@@ -54,13 +65,13 @@ export default function QuizQuestions(props: Props) {
     }
   }
 
-  // const handleSubmit = async () => {
-  //   try {
-  //     const subId = await saveSubmission({score}, props.quiz.id);
-  //   } catch (e) {
-  //     console.log(e)
-  //   }
-  // }
+  const handleSubmit = async () => {
+    try {
+      const subId = await saveSubmission({score}, props.quiz._id);
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   const handlePressPrev = () => {
   if(currentQuestion !==0) {
@@ -73,8 +84,8 @@ export default function QuizQuestions(props: Props) {
   }
 
   const scorePercentage: number = Math.round((score/ questions.length)*100);
-  const selectedAnswer: number | null | undefined = userAnswers.find((item) => item.questionId === questions[currentQuestion].id)?.answerId;
-  const isCorrect: boolean | null | undefined = questions[currentQuestion].answers.findIndex((answer) => answer.id === selectedAnswer) !== -1 ? questions[currentQuestion].answers.find((answer) => answer.id === selectedAnswer)?.isCorrect : null;
+  const selectedAnswer: string | null | undefined = userAnswers.find((item) => item.questionId === questions[currentQuestion]._id)?.answerId;
+  const isCorrect: boolean | null | undefined = questions[currentQuestion].answers.findIndex((answer) => answer._id === selectedAnswer) !== -1 ? questions[currentQuestion].answers.find((answer) => answer._id === selectedAnswer)?.isCorrect : null;
 
   if(submitted) {
     return (
@@ -104,9 +115,9 @@ export default function QuizQuestions(props: Props) {
         <div className="grid grid-cols-1 gap-3 mt-1">
           {
             questions[currentQuestion].answers.map(answer => {
-              const variant = selectedAnswer === answer.id ? (answer.isCorrect ? "neoSuccess" : "neoDanger") : "neoOutline";
+              const variant = selectedAnswer === answer._id ? (answer.isCorrect ? "neoSuccess" : "neoDanger") : "neoOutline";
                 return (
-                <Button key={answer.id} disabled={!!selectedAnswer} variant={variant} size="xl" onClick={() => handleAnswer(answer, questions[currentQuestion].id)} className="disabled:opacity-100">
+                <Button key={answer._id} disabled={!!selectedAnswer} variant={variant} size="xl" onClick={() => handleAnswer(answer, questions[currentQuestion]._id)} className="disabled:opacity-100">
                  <p className="whitespace-normal">{answer.answerText}</p> 
                 </Button>
                 )

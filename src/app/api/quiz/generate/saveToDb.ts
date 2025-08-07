@@ -1,48 +1,61 @@
-import { db } from "@/db";
-import { quizzes, questions as dbQuestions, questionAnswers } from "@/db/schema";
-import { InferInsertModel } from "drizzle-orm";
+import { connectDB } from "@/db";
+import { Quiz, Question, Answer } from "@/db/schema";
 
-type Quiz = InferInsertModel<typeof quizzes>;
-type Question = InferInsertModel<typeof dbQuestions>;
-type Answer = InferInsertModel<typeof questionAnswers>;
-
-interface SaveQuizData extends Quiz {
-    questions: Array<Question & {answers?: Answer[]}>;
+interface SaveQuizData {
+    name: string;
+    description: string;
+    questions: Array<{
+        questionText: string;
+        answers?: Array<{
+            answerText: string;
+            isCorrect: boolean;
+        }>;
+    }>;
 }
 
 export default async function saveQuiz(quizData: SaveQuizData) {
+    await connectDB();
+    
     const { name, description, questions } = quizData;
 
-    const newQuiz = await db
-    .insert(quizzes)
-    .values({
+    // Create the quiz
+    const newQuiz = new Quiz({
         name,
         description
-    })
-    .returning({ insertedId: quizzes.id});
-    const quizId = newQuiz[0].insertedId;
+    });
+    const savedQuiz = await newQuiz.save();
+    const quizId = savedQuiz._id;
 
-    await db.transaction(async(tx) => {
-        for (const question of questions) {
-            const [{questionId}] = await tx
-            .insert(dbQuestions)
-            .values({
-                questionText: question.questionText, 
-                quizId
-            })
-            .returning({questionId: dbQuestions.id})
+    // Create questions and answers
+    const questionIds = [];
+    for (const questionData of questions) {
+        const newQuestion = new Question({
+            questionText: questionData.questionText,
+            quizId: quizId
+        });
+        const savedQuestion = await newQuestion.save();
+        questionIds.push(savedQuestion._id);
 
-            if (question.answers && question.answers.length > 0) {
-                await tx.insert(questionAnswers).values(
-                    question.answers.map((answer) => ({
-                        answerText: answer.answerText,
-                        isCorrect: answer.isCorrect,
-                        questionId
-                    }))
-                )
-            }
+        if (questionData.answers && questionData.answers.length > 0) {
+            const answers = questionData.answers.map((answer) => ({
+                answerText: answer.answerText,
+                isCorrect: answer.isCorrect,
+                questionId: savedQuestion._id
+            }));
+            
+            const savedAnswers = await Answer.insertMany(answers);
+            
+            // Update question with answer IDs
+            await Question.findByIdAndUpdate(
+                savedQuestion._id,
+                { answers: savedAnswers.map(answer => answer._id) }
+            );
         }
-    })
-console.log(quizData)
-    return { quizId }
+    }
+
+    // Update quiz with question IDs
+    await Quiz.findByIdAndUpdate(quizId, { questions: questionIds });
+
+    console.log(quizData);
+    return { quizId: quizId.toString() };
 }
