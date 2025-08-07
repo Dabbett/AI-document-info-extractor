@@ -32,11 +32,11 @@ const page = async ({ params }: {
             _id: quizId,
             name: quizDoc.name || "Quiz",
             description: quizDoc.description || "Quiz",
-            questions: questions.map(q => ({
-                _id: q._id.toString(),
+            questions: questions.map((q: any) => ({
+                _id: (q._id as any).toString(),
                 questionText: q.questionText,
-                answers: (q.answers || []).map(a => ({
-                    _id: a._id.toString(),
+                answers: (q.answers || []).map((a: any) => ({
+                    _id: (a._id as any).toString(),
                     answerText: a.answerText,
                     isCorrect: a.isCorrect
                 }))

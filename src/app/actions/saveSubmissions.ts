@@ -2,7 +2,6 @@
 
 import { connectDB } from "@/db";
 import { QuizSubmission } from "@/db/schema";
-import { auth } from "@/auth";
 
 interface Submission {
   score: number;

@@ -67,7 +67,7 @@ export default function QuizQuestions(props: Props) {
 
   const handleSubmit = async () => {
     try {
-      const subId = await saveSubmission({score}, props.quiz._id);
+      const subId = await saveSubmission({score, quizId: props.quiz._id}, props.quiz._id);
     } catch (e) {
       console.log(e)
     }
