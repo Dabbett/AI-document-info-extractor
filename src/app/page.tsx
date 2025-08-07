@@ -71,7 +71,7 @@ export default function Home() {
                   transition={{ duration: 0.8, delay: 0.6 }}
                 >
                   Upload a PDF and generate a quiz using artificial intelligence. 
-                  <span className={`block mt-2 ${colors.text.muted}`}>Transform any document into an interactive learning experience.</span>
+                  <span className={`block mt-2 ${colors.text.muted}`}>Transform your document into an interactive learning experience.</span>
                 </motion.p>
 
                 <motion.div

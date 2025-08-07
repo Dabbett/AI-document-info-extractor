@@ -79,6 +79,33 @@ const QuizSubmission = (props: Props) => {
                         You Scored: <span className={`font-bold ${colors.text.primary}`}>{scorePercentage}%</span>
                     </motion.p>
 
+                    {scorePercentage < 70 && (
+                        <motion.p 
+                            className={`text-sm ${colors.text.muted} mb-4 italic`}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.45 }}
+                        >
+                            {(() => {
+                                const quotes = [
+                                    "Not great! But there's always... something other than this?",
+                                    "Hey, look at you! I'm sure there are things you aren't that bad at. (Not this of course)",
+                                    "Well, at least you tried.. That's something!",
+                                    "Don't worry, even Einstein had bad days. (Probably not this many though)",
+                                    "You know what they say - practice makes... well, you get the idea",
+                                    "On the bright side, you're definitely not the worst! (Probably)",
+                                    "Remember: Rome wasn't built in a day. Neither was your knowledge of this topic, apparently",
+                                    "Someone has to be the worst -- today that's you -- but tomorrow it could be you also.",
+                                    "At least you're consistent... consistently wrong, but consistent!",
+                                    "You know what they say -- actually you proabaly don't know that either.",
+                                    "Think of this as character building. Your character is definitely being built right now",
+                                    "I'm saying this with all the love you deserve -- you should really be ashamed of yourself"
+                                ];
+                                return quotes[Math.floor(Math.random() * quotes.length)];
+                            })()}
+                        </motion.p>
+                    )}
+
                     {scorePercentage === 100 ? (
                         <motion.div 
                             className="flex flex-col items-center"
