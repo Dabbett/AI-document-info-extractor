@@ -42,23 +42,30 @@ export default function SessionBasedQuiz() {
   useEffect(() => {
     const sessionQuiz = sessionStorage.getItem('currentQuiz');
     if (sessionQuiz) {
-      setQuiz(JSON.parse(sessionQuiz));
+      try {
+        const parsedQuiz = JSON.parse(sessionQuiz);
+        setQuiz(parsedQuiz);
+      } catch (error) {
+        console.error('Error parsing quiz data:', error);
+        router.push('/quiz/new');
+      }
     } else {
       // Redirect to quiz generation if no quiz in session
       router.push('/quiz/new');
     }
   }, [router]);
 
-      if (!quiz) {
-      return (
-        <div className={`${backgrounds.main} flex items-center justify-center`}>
-          <div className={`${backgrounds.glass} p-12 text-center`}>
-            <div className="animate-spin w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-            <p className={colors.text.primary}>Loading quiz...</p>
-          </div>
+  // Show loading state while quiz is being loaded
+  if (!quiz) {
+    return (
+      <div className={`${backgrounds.main} flex items-center justify-center min-h-screen`}>
+        <div className={`${backgrounds.glass} p-12 text-center`}>
+          <div className="animate-spin w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className={colors.text.primary}>Loading quiz...</p>
         </div>
-      );
-    }
+      </div>
+    );
+  }
 
   const { questions } = quiz;
 

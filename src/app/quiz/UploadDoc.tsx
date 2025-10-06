@@ -36,20 +36,27 @@ const UploadDoc = ({ standalone = true }: UploadDocProps) => {
       if (res.status === 200) {
         const data = await res.json();
         
-        // Store quiz data in session storage instead of redirecting
+        // Store quiz data in session storage
         sessionStorage.setItem('currentQuiz', JSON.stringify(data.quiz));
         
-        // Redirect to session-based quiz page
-        router.push('/quiz/session-based');
+        // Show success message briefly before redirecting
+        setError(""); // Clear any previous errors
+        setIsLoading(true); // Keep loading state
+        
+        // Small delay to show success state
+        setTimeout(() => {
+          router.push('/quiz/session-based');
+        }, 500);
       } else {
         const errorData = await res.json();
         setError(errorData.error || "Failed to generate quiz");
+        setIsLoading(false);
       }
     } catch (e) {
       console.log("error while generating", e);
       setError("Network error occurred");
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   const handleDocumentUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
