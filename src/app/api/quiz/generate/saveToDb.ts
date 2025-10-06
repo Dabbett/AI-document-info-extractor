@@ -56,6 +56,6 @@ export default async function saveQuiz(quizData: SaveQuizData) {
     // Update quiz with question IDs
     await Quiz.findByIdAndUpdate(quizId, { questions: questionIds });
 
-    console.log(quizData);
+    console.log('Quiz saved to MongoDB:', { quizId, name, description });
     return { quizId: quizId.toString() };
 }
